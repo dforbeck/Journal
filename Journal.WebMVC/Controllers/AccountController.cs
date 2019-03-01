@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Journal.WebMVC.Models;
+using Journal.Data;
 
 namespace Journal.WebMVC.Controllers
 {
