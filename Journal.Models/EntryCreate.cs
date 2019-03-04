@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 
 namespace Journal.Models
 {
-    public class EntryListItem
+    public class EntryCreate
     {
-        public int EntryId { get; set; }
+        [Required]
+        [MinLength(2, ErrorMessage = "Please enter at least 2 characters.")]
         public string Title { get; set; }
 
-        [Display(Name = "Created")]
-        public DateTimeOffset CreatedUtc { get; set; }
+        [Required]
+        [MaxLength(8000)]
+        public string Content { get; set; }
 
         public override string ToString() => Title;
     }
