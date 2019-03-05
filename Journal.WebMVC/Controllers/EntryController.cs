@@ -39,14 +39,24 @@ namespace Journal.WebMVC.Controllers
                 return View(model);
             }
 
-            var userId = Guid.Parse(User.Identity.GetUserId());
-            var service = new EntryService(userId);
+            var service = CreateEntryService();
 
-            service.CreateEntry(model);
+            if (service.CreateEntry(model))
+            {
+                TempData["SaveResult"] = "Your entry was created.";
+                return RedirectToAction("Index");
+            };
 
-            return RedirectToAction("Index");
-           
+            ModelState.AddModelError("", "Entry could not be created.");
+
+            return View(model);
         }
 
+        public EntryService CreateEntryService()
+        {
+            var userId = Guid.Parse(User.Identity.GetUserId());
+            var service = new EntryService(userId);
+            return service;
+        }
     }
 }
