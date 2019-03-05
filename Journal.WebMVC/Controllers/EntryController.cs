@@ -97,6 +97,28 @@ namespace Journal.WebMVC.Controllers
             return View();
         }
 
+        [ActionName("Delete")]
+        public ActionResult Delete(int id)
+        {
+            var svc = CreateEntryService();
+            var model = svc.GetEntryById(id);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeletePost(int id)
+        {
+            var service = CreateEntryService();
+            service.DeleteEntry(id);
+
+            TempData["SaveResult"] = "Your note was deleted";
+
+            return RedirectToAction("Index");
+        }
+
         public EntryService CreateEntryService()
         {
             var userId = Guid.Parse(User.Identity.GetUserId());
