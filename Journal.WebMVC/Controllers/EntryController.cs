@@ -52,6 +52,14 @@ namespace Journal.WebMVC.Controllers
             return View(model);
         }
 
+        public ActionResult Details(int id)
+        {
+            var svc = CreateEntryService();
+            var model = svc.GetEntryById(id);
+
+            return View(model);
+        }
+
         public EntryService CreateEntryService()
         {
             var userId = Guid.Parse(User.Identity.GetUserId());

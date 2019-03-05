@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntryCreate.cs" />
+    <Compile Include="EntryDetails.cs" />
     <Compile Include="EntryListItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

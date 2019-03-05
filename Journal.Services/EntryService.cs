@@ -52,5 +52,23 @@ namespace Journal.Services
                 return query.ToArray();
             }
         }
+
+        public EntryDetails GetEntryById(int entryId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity = ctx.Entries.Single(e => e.EntryId == entryId && e.OwnerId == _userId);
+
+                return new EntryDetails
+                {
+                    EntryId = entity.EntryId,
+                    Title = entity.Title,
+                    Content = entity.Content,
+                    CreatedUtc = entity.CreatedUtc,
+                    ModifiedUtc = entity.ModifiedUtc
+                };
+            }
+        }
     }
+
 }
