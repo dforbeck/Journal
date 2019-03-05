@@ -34,7 +34,8 @@ namespace Journal.Services
             }
         }
 
-        public IEnumerable<EntryListItem> GetEntries()
+        //entries that belong to a certain user is next
+        public IEnumerable<EntryListItem>   GetEntries()
         {
             using (var ctx = new ApplicationDbContext())
             {

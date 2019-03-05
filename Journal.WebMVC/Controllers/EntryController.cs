@@ -1,4 +1,6 @@
 ﻿using Journal.Models;
+using Journal.Services;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +13,13 @@ namespace Journal.WebMVC.Controllers
     public class EntryController : Controller
     {
         // GET: Entry
+        //displays all the notes for the current user
         public ActionResult Index()
         {
-            var model = new EntryListItem[0];
+            var userId = Guid.Parse(User.Identity.GetUserId());
+            var service = new EntryService(userId);
+            var model = service.GetEntries();
+
             return View(model);
         }
 
@@ -23,14 +29,23 @@ namespace Journal.WebMVC.Controllers
             return View();
         }
 
+        //makes sure valid, grabs current id, calls on createEntry and returns back to index
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(EntryCreate model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
+                return View(model);
             }
-            return View(model);
+
+            var userId = Guid.Parse(User.Identity.GetUserId());
+            var service = new EntryService(userId);
+
+            service.CreateEntry(model);
+
+            return RedirectToAction("Index");
+           
         }
 
     }
