@@ -54,11 +54,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Journal.Data\Journal.Data.csproj">
+      <Project>{86eea2d2-764b-403b-8212-d39aafd7dea3}</Project>
+      <Name>Journal.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Journal.Models\Journal.Models.csproj">
+      <Project>{3b908241-cece-4fdd-ae68-5c9cf20344a2}</Project>
+      <Name>Journal.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
