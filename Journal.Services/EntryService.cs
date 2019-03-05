@@ -69,6 +69,21 @@ namespace Journal.Services
                 };
             }
         }
+
+        public bool UpdateEntry(EntryEdit model)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity = ctx.Entries.Single(e => e.EntryId == model.EntryId && e.OwnerId == _userId);
+
+                entity.Title = model.Title;
+                entity.Content = model.Content;
+                entity.ModifiedUtc = DateTimeOffset.UtcNow;
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
     }
+
 
 }

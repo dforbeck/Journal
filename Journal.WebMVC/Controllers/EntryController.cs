@@ -60,6 +60,43 @@ namespace Journal.WebMVC.Controllers
             return View(model);
         }
 
+        public ActionResult Edit(int id)
+        {
+            var service = CreateEntryService();
+            var detail = service.GetEntryById(id);
+            var model = new EntryEdit
+            {
+                EntryId = detail.EntryId,
+                Title = detail.Title,
+                Content = detail.Content
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit (int id, EntryEdit model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            if(model.EntryId != id)
+            {
+                ModelState.AddModelError("", "Id Mismatch");
+                return View(model);
+            }
+
+            var service = CreateEntryService();
+
+            if (service.UpdateEntry(model))
+            {
+                TempData["SaveResult"] = "Your note was updated.";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", "Your note could not be updated.");
+            return View();
+        }
+
         public EntryService CreateEntryService()
         {
             var userId = Guid.Parse(User.Identity.GetUserId());
